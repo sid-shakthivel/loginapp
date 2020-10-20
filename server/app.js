@@ -17,6 +17,9 @@ app.use('/login', login);
 app.use('/dashboard', dashboard);
 
 app.use(cors());
+app.use(
+    express.static('/Users/siddharth/Code/javascript/loginapp/client/build')
+);
 
 // Connect to DB
 mongoose.connect('mongodb://localhost/loginapp', {
@@ -27,7 +30,8 @@ mongoose.connect('mongodb://localhost/loginapp', {
 
 // API route
 app.get('/', (req, res) => {
-    res.send('HEY');
+    console.log('IT WORKS');
+    res.sendFile('/Users/siddharth/Code/javascript/loginapp/client/build');
 });
 
 // Make web server listen on PORT 500
