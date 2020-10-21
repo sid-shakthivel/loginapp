@@ -8,6 +8,8 @@ const signup = require('./routes/signup');
 const login = require('./routes/login');
 const dashboard = require('./routes/dashboard');
 
+const { dbusername, dbpassword } = require('./env');
+
 const app = express();
 const PORT = 5000;
 
