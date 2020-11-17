@@ -27,7 +27,7 @@ export default function Login({ history }) {
     async function handleSubmit(e) {
         e.preventDefault();
 
-        let request = await fetch('http://localhost:5000/login', {
+        let request = await fetch('http://miraclloginapp.myddns.me/api/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

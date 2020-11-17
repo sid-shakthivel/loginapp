@@ -14,7 +14,7 @@ router.use(cookieParser());
 
 router.use(
     cors({
-        origin: 'http://localhost:3000',
+        origin: 'http://miraclloginapp.myddns.me',
         credentials: true,
     })
 );

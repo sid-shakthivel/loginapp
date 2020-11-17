@@ -3,8 +3,8 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
-
-const { jwt_secret } = require('../env');
+const { Issuer } = require('openid-client');
+const { jwt_secret, secret, redirect_url, id  } = require('../env');
 const { User } = require('../user');
 
 const router = express.Router();
@@ -13,12 +13,28 @@ router.use(cookieParser());
 
 router.use(
     cors({
-        origin: 'http://localhost:3000',
+        origin: 'http://miraclloginapp.ml',
         credentials: true,
     })
 );
 
+(async () => {
+    try {
+        const issuer = await Issuer.discover('https://api.mpin.io');
+	console.log(redirect_url);
+        client = new issuer.Client({
+            client_id: id,
+            client_secret: secret,
+            redirect_uris: [redirect_url],
+            response_types: ['code'],
+        });
+    } catch (error) {
+        console.log(error);
+    }
+})();
+
 router.post('/', async (req, res) => {
+    //console.log(redirect_url);
     try {
         // Make new user
         const user = new User({
@@ -73,7 +89,6 @@ router.post('/', async (req, res) => {
                 scope: 'openid',
                 state,
             });
-
             res.status(200).json({ url });
         } else {
             res.status(400).json({ error: error.errors });
@@ -82,3 +97,4 @@ router.post('/', async (req, res) => {
 });
 
 module.exports = router;
+

@@ -9,7 +9,7 @@ export default function App() {
     return (
         <Router>
             <div>
-                <Switch>\
+                <Switch>
                     <Route exact path="/" component={Login} />
                     <Route exact path="/signUp" component={SignUp} />
                     <Route exact path="/dashboard" component={Dashboard} />
@@ -35,22 +35,24 @@ export default function App() {
                                 firstIndex,
                                 sub_url.length
                             );
-
-                            fetch('http://localhost:5000/login/getToken', {
+			    console.log(code);
+                            console.log(state);
+                            fetch('http://miraclloginapp.myddns.me/api/login/getToken', {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json',
+				    'Accept': 'application/json',
                                 },
                                 credentials: 'include',
                                 body: JSON.stringify({
                                     code,
                                     state,
                                 }),
-                            }).then(() => {
-                                console.log('here');
-                                routeProps.history.push('/dashboard');
-                                return;
-                            });
+                            }).then((res) => {
+			       console.log(res);
+			       routeProps.history.push('/dashboard');
+                               return;	
+			    });
 
                             return <h1>Callback</h1>;
                         }}

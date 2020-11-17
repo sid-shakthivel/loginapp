@@ -2,39 +2,36 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const { Issuer } = require('openid-client');
 
 // Import Routes
 const signup = require('./routes/signup');
 const login = require('./routes/login');
 const dashboard = require('./routes/dashboard');
 
-const { dbusername, dbpassword } = require('./env');
+const { dbusername, dbpassword, secret, id, redirect_url  } = require('./env');
 
 const app = express();
-const PORT = 5000;
+const PORT = 8080;
 
 // Use Route
-app.use('/signup', signup);
-app.use('/login', login);
-app.use('/dashboard', dashboard);
+app.use('/api/signup', signup);
+app.use('/api/login', login);
+app.use('/api/dashboard', dashboard);
 
 app.use(cors());
-app.use(
-    express.static('/Users/siddharth/Code/javascript/loginapp/client/build')
-);
 
 // Connect to DB
-mongoose.connect('mongodb://localhost/loginapp', {
+mongoose.connect(`mongodb://${dbusername}:${dbpassword}@localhost:127.0.0.1/loginapp`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
 });
 
 // API route
-app.get('/', (req, res) => {
-    console.log('IT WORKS');
-    res.sendFile('/Users/siddharth/Code/javascript/loginapp/client/build');
+app.get('/api', (req, res) => {
+   res.status(200).json({ message: `${redirect_url}` });
 });
 
-// Make web server listen on PORT 500
+// Make web server listen on PORT 8080
 app.listen(PORT);

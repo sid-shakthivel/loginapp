@@ -10,13 +10,14 @@ export default function Dashboard() {
     });
 
     useEffect(() => {
-        fetch('http://localhost:5000/dashboard', {
+        fetch('http://miraclloginapp.myddns.me/api/dashboard', {
             method: 'GET',
             credentials: 'include',
         })
             .then((res) => res.json())
             .then((res) => {
                 if (res.error) {
+	            console.log(res.error);
                     changeComponent({ component: <Redirect to="/" /> });
                     return;
                 }

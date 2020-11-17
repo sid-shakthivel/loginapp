@@ -45,10 +45,11 @@ export default function Signup() {
             return;
         }
 
-        let request = await fetch('http://localhost:5000/signup', {
+        let request = await fetch('http://miraclloginapp.ml/api/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+		'Accept': 'application/json',
             },
             credentials: 'include',
             body: JSON.stringify({
@@ -59,7 +60,8 @@ export default function Signup() {
         });
 
         request = await request.json();
-        console.log(request.error.username.message);
+	console.log(request);
+	
         if (request.error.username.message) {
             toast.warn(`${request.error.username.message}`, {
                 position: 'top-right',
